@@ -2,8 +2,8 @@ let form = document.getElementById('form')
 form.addEventListener('submit',onSubmit)
 
 // select and applay listener for del button
-//  let items = document.getElementById('items')
-//  items.addEventListener('click',delItem)
+  let items = document.getElementById('items')
+  items.addEventListener('click',deleteUser)
 //  items.addEventListener('click',editItem)
 
 
@@ -36,8 +36,10 @@ function onSubmit(e){
     let editBtn = document.createElement('button')
     delBtn.appendChild(document.createTextNode('x'))
     delBtn.setAttribute('class','btn btn-danger  float-right m-1')
+    delBtn.setAttribute('id',`${item._id}`)
     editBtn.appendChild(document.createTextNode('edit'))
     editBtn.setAttribute('class','btn btn-info float-right m-1')
+    editBtn.setAttribute('id',`${item._id}`)
     ul.appendChild(li) 
     li.appendChild(delBtn)
     li.appendChild(editBtn)
@@ -63,14 +65,24 @@ async function getUser(){
   }
 }
 
+function deleteUser(e){
+  e.preventDefault();
+  if(e.target.getAttribute('class') == 'btn btn-danger  float-right m-1'){
+  var id = e.target.getAttribute('id')
+  console.log(id)
+   axios.delete(`https://crudcrud.com/api/0a4c918dac0f41ed815ceed4640b8b27/users/${id}`)
+   .then((res) => console.log(res))
+   .catch(err => console.log(err))
+  }
+}
+
+
+
+
 // function updateUser(e){
 //   axios.put('https://crudcrud.com/api/0a4c918dac0f41ed815ceed4640b8b27/users')
 //   .then((res) => console.log(res))
 //   .catch(err => console.log(err))
 // }
 
-// function deleteUser(){
-//   axios.put('https://crudcrud.com/api/0a4c918dac0f41ed815ceed4640b8b27/users')
-//   .then((res) => console.log(res))
-//   .catch(err => console.log(err))
-// }
+
